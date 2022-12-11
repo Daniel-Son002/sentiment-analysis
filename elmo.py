@@ -26,8 +26,8 @@ def main():
     reader = StanfordSentimentTreeBankDatasetReader(
         token_indexers={'tokens': elmo_token_indexer})
 
-    train_dataset = reader.read('data/stanfordSentimentTreebank/trees/train.txt')
-    dev_dataset = reader.read('data/stanfordSentimentTreebank/trees/dev.txt')
+    train_dataset = list(reader.read("\stanfordSentimentTreebank\trees\train.txt"))
+    dev_dataset = list(reader.read("\stanfordSentimentTreebank\trees\dev.txt"))
 
     # Initialize the ELMo-based token embedder using a pre-trained file.
     # This takes a while if you run this script for the first time
@@ -48,10 +48,10 @@ def main():
 
     elmo_embedder = ElmoTokenEmbedder(options_file, weight_file)
 
-    # vocab = Vocabulary.from_instances(train_dataset + dev_dataset,
-    #                                   min_count={'tokens': 3})
-    vocab = Vocabulary.from_instances(chain(train_dataset , dev_dataset),
+    vocab = Vocabulary.from_instances(train_dataset + dev_dataset,
                                       min_count={'tokens': 3})
+    # vocab = Vocabulary.from_instances(chain(train_dataset , dev_dataset),
+    #                                   min_count={'tokens': 3})
     
     # Pass in the ElmoTokenEmbedder instance instead
     embedder = BasicTextFieldEmbedder({"tokens": elmo_embedder})
