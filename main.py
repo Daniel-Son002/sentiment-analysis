@@ -3,21 +3,22 @@ from typing import Dict
 
 import numpy as np
 import torch
-import toch.optim as optim
+import torch.optim as optim
 from allennlp.data import TextFieldTensors
 from allennlp.data.data_loaders import MultiProcessDataLoader
 from allennlp.data.samplers import BucketBatchSampler
 from allennlp.data.vocabulary import Vocabulary
 from allennlp.models import Model
 from allennlp.modules.seq2vec_encoders import Seq2VecEncoder, PytorchSeq2VecWrapper
-from allennlp.modules.text_field_embedders import TextFieldEmbedder, BasicTextFileEmbedder
+from allennlp.modules.text_field_embedders import TextFieldEmbedder, BasicTextFieldEmbedder
 from allennlp.modules.token_embedders import Embedding
 from allennlp.nn.util import get_text_field_mask
 from allennlp.training.metrics import CategoricalAccuracy, F1Measure
 from allennlp.training import GradientDescentTrainer
-from allennlp_models.classifcation.dataset_readers.stanford_sentiment_tree_bank import StanfordSentimentTreeBankDatasetReader
+from allennlp_models.classification.dataset_readers.stanford_sentiment_tree_bank import \
+    StanfordSentimentTreeBankDatasetReader
 
-from realworldnlp.predictors import SentenceClassifierPredictor
+from predictor import SentenceClassifierPredictor
 
 EMBEDDING_DIM = 128
 HIDDEN_DIM = 128

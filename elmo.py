@@ -11,13 +11,14 @@ from allennlp.training.trainer import Trainer
 from allennlp_models.classification.dataset_readers.stanford_sentiment_tree_bank import \
     StanfordSentimentTreeBankDatasetReader
 
-from examples.sentiment.sst_classifier import LstmClassifier
-from realworldnlp.predictors import SentenceClassifierPredictor
+from main import LstmClassifier
+from predictor import SentenceClassifierPredictor
 
 EMBEDDING_DIM = 128
 HIDDEN_DIM = 128
 
-
+from itertools import chain
+    
 def main():
     # In order to use ELMo, each word in a sentence needs to be indexed with
     # an array of character IDs.
@@ -47,9 +48,11 @@ def main():
 
     elmo_embedder = ElmoTokenEmbedder(options_file, weight_file)
 
-    vocab = Vocabulary.from_instances(train_dataset + dev_dataset,
+    # vocab = Vocabulary.from_instances(train_dataset + dev_dataset,
+    #                                   min_count={'tokens': 3})
+    vocab = Vocabulary.from_instances(chain(train_dataset , dev_dataset),
                                       min_count={'tokens': 3})
-
+    
     # Pass in the ElmoTokenEmbedder instance instead
     embedder = BasicTextFieldEmbedder({"tokens": elmo_embedder})
 
